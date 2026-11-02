@@ -1,18 +1,17 @@
 {
-  "description": "Minimize shelf in the top panel, with minimized windows of the current workspace.\n\n No settings but you can easily play around with CSS file. This extension is light and should not interfere with GNOME Shell behaviour+logic.",
+  "description": "Shows the minimized windows of the current workspace as app icons in the top bar. Click an icon to restore its window.\n\nChoose the left or right side of the top bar in the extension's settings.",
   "name": "Minimize Shelf",
   "shell-version": [
-    "3.30",
-    "3.32",
-    "3.34",
-    "3.36",
-    "40",
-    "41",
-    "42",
-    "43",
-    "44"
+    "45",
+    "46",
+    "47",
+    "48",
+    "49",
+    "50",
+    "51"
   ],
+  "settings-schema": "org.gnome.shell.extensions.minimize-shelf",
   "url": "https://github.com/clottes/minimize-shelf",
   "uuid": "minimize-shelf@clottes",
-  "version": 11
+  "version": 12
 }

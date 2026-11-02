@@ -1,57 +1,48 @@
 // SPDX-License-Identifier: GPL-3.0-only
 // Copyright 2022 Baptiste Darthenay
+// Copyright 2026 Chris Lottes
 
-const Gio = imports.gi.Gio;
-const GObject = imports.gi.GObject;
-const Gtk = imports.gi.Gtk;
+import Adw from 'gi://Adw';
+import Gtk from 'gi://Gtk';
 
-const Me = imports.misc.extensionUtils.getCurrentExtension();
-const Direction = Me.imports.utils.settings.Direction;
+import { ExtensionPreferences } from 'resource:///org/gnome/Shell/Extensions/js/extensions/prefs.js';
 
-const _toggle_direction = widget => {
-    if (widget.get_active()) Side.save(Side[widget.label]);
-};
+import { Direction } from './utils/settings.js';
 
-let Side;
+export default class MinimizeShelfPreferences extends ExtensionPreferences {
+    fillPreferencesWindow(window) {
+        const side = new Direction(this.getSettings()).load();
 
-const PrefsWidget = GObject.registerClass(
-    class PrefsWidget extends Gtk.Box {
-        _init({ margin_top, margin_side }) {
-            super._init();
-            this.set_homogeneous(true);
-            this.set_spacing(12);
-            this.set_margin_top(margin_top);
-            this.set_margin_bottom(margin_top);
-            this.set_margin_start(margin_side);
-            this.set_margin_end(margin_side);
+        const toggles = {
+            [side.Left]: Gtk.ToggleButton.new_with_label(side.label(side.Left)),
+            [side.Right]: Gtk.ToggleButton.new_with_label(
+                side.label(side.Right)
+            ),
+        };
+        toggles[side.Right].set_group(toggles[side.Left]);
+        toggles[side.value].set_active(true);
 
-            const label = new Gtk.Label({ label: 'Panel side' });
-            const TOGGLES = {
-                [Side.Left]: Gtk.ToggleButton.new_with_label(
-                    Side.label(Side.Left)
-                ),
-                [Side.Right]: Gtk.ToggleButton.new_with_label(
-                    Side.label(Side.Right)
-                ),
-            };
+        const toggleDirection = widget => {
+            if (widget.get_active()) side.save(side[widget.label]);
+        };
+        toggles[side.Left].connect('toggled', toggleDirection);
+        toggles[side.Right].connect('toggled', toggleDirection);
 
-            TOGGLES[Side.Left].connect('toggled', _toggle_direction);
-            TOGGLES[Side.Right].connect('toggled', _toggle_direction);
-            TOGGLES[Side.Right].set_group(TOGGLES[Side.Left]);
+        const buttons = new Gtk.Box({
+            css_classes: ['linked'],
+            valign: Gtk.Align.CENTER,
+        });
+        buttons.append(toggles[side.Left]);
+        buttons.append(toggles[side.Right]);
 
-            TOGGLES[Side.value].set_active(true);
+        const row = new Adw.ActionRow({ title: 'Panel side' });
+        row.add_suffix(buttons);
 
-            this.append(label);
-            this.append(TOGGLES[Side.Left]);
-            this.append(TOGGLES[Side.Right]);
-        }
+        const group = new Adw.PreferencesGroup();
+        group.add(row);
+
+        const page = new Adw.PreferencesPage();
+        page.add(group);
+        window.add(page);
     }
-);
-
-function init() {
-    Side = new Direction().load();
-}
-
-function buildPrefsWidget() {
-    return new PrefsWidget({ margin_top: 200, margin_side: 160 });
 }

@@ -8,6 +8,10 @@
     "plugin:gjs/extension",
     "plugin:prettier/recommended"
   ],
+  "parserOptions": {
+    "ecmaVersion": 2022,
+    "sourceType": "module"
+  },
   "env": {
     "gjs/application": true,
     "gjs/cairo": true,
