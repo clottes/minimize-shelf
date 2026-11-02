@@ -1,6 +1,7 @@
 {
   "name": "minimize-shelf",
   "version": "10",
+  "license": "GPL-3.0-only",
   "scripts": {
     "lint": "eslint"
   },

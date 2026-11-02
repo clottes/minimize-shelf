@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: GPL-3.0-only
 /* Minimize-shelf
    Copyright 2020-2021 Guillaume Pasquet
    Copyright 2022 Baptiste Darthenay
