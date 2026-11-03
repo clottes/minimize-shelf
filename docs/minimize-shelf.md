@@ -17,10 +17,10 @@ Panel Placement
 
 The shelf goes into either the left or right panel box, depending on the `direction` setting:
 
-| Side  | Panel box   | Insert index                     |
-| ----- | ----------- | -------------------------------- |
-| Left  | `_leftBox`  | `-1` (last item on the left)     |
-| Right | `_rightBox` | `1` (first item on the right)    |
+| Side  | Panel box   | Insert index                  |
+| ----- | ----------- | ----------------------------- |
+| Left  | `_leftBox`  | `-1` (last item on the left)  |
+| Right | `_rightBox` | `1` (first item on the right) |
 
 Refresh Triggers
 ----------------
@@ -53,24 +53,24 @@ On every rebuild, each window on the workspace gets an icon geometry via `set_ic
 Project Layout
 ============================================================
 
-| File                                                                  | Purpose                                                               |
-| --------------------------------------------------------------------- | --------------------------------------------------------------------- |
-| [`extension.js`](../extension.js)                                     | `WindowList` (the shelf) and the `Extension` enable/disable lifecycle |
-| [`prefs.js`](../prefs.js)                                             | Adwaita preferences page with Left/Right toggle buttons               |
-| [`utils/settings.js`](../utils/settings.js)                           | `Direction` class wrapping the GSettings `direction` key              |
-| [`schemas/`](../schemas/)                                             | GSettings schema and its compiled `gschemas.compiled`                 |
-| [`stylesheet.css`](../stylesheet.css)                                 | Icon styling (`.focused-app`)                                         |
-| [`Makefile`](../Makefile)                                             | Pack, install, prefs and clean targets                                |
-| [`.github/workflows/lint.yml`](../.github/workflows/lint.yml)         | ESLint on every push                                                  |
+| File                                                          | Purpose                                                               |
+| ------------------------------------------------------------- | --------------------------------------------------------------------- |
+| [`extension.js`](../extension.js)                             | `WindowList` (the shelf) and the `Extension` enable/disable lifecycle |
+| [`prefs.js`](../prefs.js)                                     | Adwaita preferences page with Left/Right toggle buttons               |
+| [`utils/settings.js`](../utils/settings.js)                   | `Direction` class wrapping the GSettings `direction` key              |
+| [`schemas/`](../schemas/)                                     | GSettings schema and its compiled `gschemas.compiled`                 |
+| [`stylesheet.css`](../stylesheet.css)                         | Icon styling (`.focused-app`)                                         |
+| [`Makefile`](../Makefile)                                     | Pack, install, prefs and clean targets                                |
+| [`.github/workflows/lint.yml`](../.github/workflows/lint.yml) | ESLint on every push                                                  |
 
 Settings
 ============================================================
 
 The extension has a single setting, stored in schema `org.gnome.shell.extensions.minimize-shelf`:
 
-| Key         | Type                  | Default | Effect                          |
-| ----------- | --------------------- | ------- | ------------------------------- |
-| `direction` | enum (`Left`/`Right`) | `Right` | Which side of the panel to use  |
+| Key         | Type                  | Default | Effect                         |
+| ----------- | --------------------- | ------- | ------------------------------ |
+| `direction` | enum (`Left`/`Right`) | `Right` | Which side of the panel to use |
 
 Changing the setting takes effect immediately: the extension destroys the shelf and rebuilds it on the new side, without reloading the extension.
 
@@ -138,7 +138,7 @@ Known Limitations
 ============================================================
 
 - 🐞 **GNOME 44 and older are unsupported.** The code uses ES modules, `Mtk.Rectangle` and the `Extension` class, all of which need GNOME 45+.
-- ⏳ **Only tested on GNOME 46.** 47 – 51 are listed because their porting guides show no breaking changes for the APIs used here.
+- ⏳ **Only tested on GNOME 46.** 47 - 51 are listed because their porting guides show no breaking changes for the APIs used here.
 - 💣 **`button-press-event` is deprecated in GNOME 51.** It still works, but a future release removes it in favour of `Clutter.ClickGesture`.
 - 🐞 **Animation anchor is approximate.** See [Minimize Animation](#minimize-animation).
 - ⛏️ **Dead code.** `_activateWorkspace()` in `extension.js` is never called, and `.hidden-app` in `stylesheet.css` is unused.
@@ -148,7 +148,7 @@ Todo
 
 - [x] 📦 Port to ES modules for GNOME 45+ (`Mtk.Rectangle`, replace `add_actor()`)
 - [x] ⚙️ Apply a `direction` change without reloading the extension
-- [ ] ⏳ Test on GNOME 47 – 51 (VM or GNOME OS image)
+- [ ] ⏳ Test on GNOME 47 - 51 (VM or GNOME OS image)
 - [ ] 🔧 Replace `button-press-event` with `Clutter.ClickGesture` before it's removed
 - [ ] 🔧 Derive the minimize animation anchor from the shelf's real position instead of hard-coded offsets
 - [ ] 🗑️ Remove `_activateWorkspace()` and the unused `.hidden-app` style
